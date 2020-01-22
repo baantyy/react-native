@@ -9,6 +9,7 @@ import {
   Switch,
   TouchableHighlight,
 } from 'react-native';
+import Header from '../../components/Header';
 import s from './style';
 
 const data = [
@@ -22,7 +23,7 @@ const data = [
   {id: 8, title: 'Hello'},
 ];
 
-const Input = () => {
+const Input = props => {
   const [text, setText] = useState('');
   const [language, setLanguage] = useState('js');
   const [switchValue, setSwitch] = useState(false);
@@ -36,106 +37,109 @@ const Input = () => {
     }
   };
   return (
-    <ScrollView>
-      <View style={s.screen}>
-        <View style={s.container}>
-          <Text style={s.title}>Input Fields</Text>
-          <View>
-            <View style={s.switch}>
-              <Switch
-                value={switchValue}
-                onChange={e => setSwitch(!switchValue)}
-                // thumbColor="green"
-              />
-            </View>
-            {/* radio */}
-            <Text style={[s.label, {marginBottom: 10}]}>Radio:</Text>
-            <View style={s.radio}>
-              {data.map(item => (
-                <TouchableHighlight
-                  key={item.id}
-                  style={s.radioItem}
-                  onPress={() => setRadio(item.id)}
-                  underlayColor="transparent">
-                  <>
-                    <View style={s.radioIcon}>
-                      {radio === item.id && <Text style={s.radioActive} />}
-                    </View>
-                    <Text style={s.radioText}>{item.title}</Text>
-                  </>
-                </TouchableHighlight>
-              ))}
-            </View>
-            {/* checkbox */}
-            <Text style={[s.label, {marginBottom: 10, marginTop: 20}]}>
-              Checkbox:
-            </Text>
-            <View style={s.check}>
-              {data.map(item => {
-                const checkValue = checkboxes.some(i => i.id === item.id);
-                return (
+    <View>
+      <Header title="Input" currentRoute="input" {...props} />
+      <ScrollView>
+        <View style={s.screen}>
+          <View style={s.container}>
+            <Text style={s.title}>Input Fields</Text>
+            <View>
+              <View style={s.switch}>
+                <Switch
+                  value={switchValue}
+                  onChange={e => setSwitch(!switchValue)}
+                  // thumbColor="green"
+                />
+              </View>
+              {/* radio */}
+              <Text style={[s.label, {marginBottom: 10}]}>Radio:</Text>
+              <View style={s.radio}>
+                {data.map(item => (
                   <TouchableHighlight
                     key={item.id}
-                    style={s.checkItem}
-                    onPress={() => handleCheckItem(item)}
+                    style={s.radioItem}
+                    onPress={() => setRadio(item.id)}
                     underlayColor="transparent">
                     <>
-                      <View style={s.checkIcon}>
-                        {checkValue && <Text style={s.checkActive} />}
+                      <View style={s.radioIcon}>
+                        {radio === item.id && <Text style={s.radioActive} />}
                       </View>
-                      <Text style={s.checkText}>{item.title}</Text>
+                      <Text style={s.radioText}>{item.title}</Text>
                     </>
                   </TouchableHighlight>
-                );
-              })}
+                ))}
+              </View>
+              {/* checkbox */}
+              <Text style={[s.label, {marginBottom: 10, marginTop: 20}]}>
+                Checkbox:
+              </Text>
+              <View style={s.check}>
+                {data.map(item => {
+                  const checkValue = checkboxes.some(i => i.id === item.id);
+                  return (
+                    <TouchableHighlight
+                      key={item.id}
+                      style={s.checkItem}
+                      onPress={() => handleCheckItem(item)}
+                      underlayColor="transparent">
+                      <>
+                        <View style={s.checkIcon}>
+                          {checkValue && <Text style={s.checkActive} />}
+                        </View>
+                        <Text style={s.checkText}>{item.title}</Text>
+                      </>
+                    </TouchableHighlight>
+                  );
+                })}
+              </View>
+              {/* inputs */}
+              <Text style={[s.label, {marginTop: 20}]}>Normal:</Text>
+              <TextInput
+                style={s.input}
+                placeholder="Username"
+                onChangeText={e => setText(e)}
+                value={text}
+              />
+              <Text style={s.label}>Password:</Text>
+              <TextInput
+                style={s.input}
+                placeholder="Password"
+                secureTextEntry={true}
+              />
+              <Text style={s.label}>Disabled:</Text>
+              <TextInput
+                style={s.input}
+                editable={false}
+                placeholder="Disabled"
+              />
+              <Text style={s.label}>Number Pad:</Text>
+              <TextInput
+                style={s.input}
+                maxLength={10}
+                keyboardType="number-pad"
+                placeholder="Phone Number"
+              />
+              <Text style={s.label}>Textarea:</Text>
+              <TextInput
+                style={s.input}
+                multiline={true}
+                numberOfLines={5}
+                placeholder="Message"
+              />
+              {/* select */}
+              <Text style={s.label}>Select:</Text>
+              <Picker
+                selectedValue={language}
+                style={s.input}
+                onValueChange={(value, index) => setLanguage(value)}>
+                <Picker.Item label="Java" value="java" />
+                <Picker.Item label="JavaScript" value="js" />
+              </Picker>
             </View>
-            {/* inputs */}
-            <Text style={[s.label, {marginTop: 20}]}>Normal:</Text>
-            <TextInput
-              style={s.input}
-              placeholder="Username"
-              onChangeText={e => setText(e)}
-              value={text}
-            />
-            <Text style={s.label}>Password:</Text>
-            <TextInput
-              style={s.input}
-              placeholder="Password"
-              secureTextEntry={true}
-            />
-            <Text style={s.label}>Disabled:</Text>
-            <TextInput
-              style={s.input}
-              editable={false}
-              placeholder="Disabled"
-            />
-            <Text style={s.label}>Number Pad:</Text>
-            <TextInput
-              style={s.input}
-              maxLength={10}
-              keyboardType="number-pad"
-              placeholder="Phone Number"
-            />
-            <Text style={s.label}>Textarea:</Text>
-            <TextInput
-              style={s.input}
-              multiline={true}
-              numberOfLines={5}
-              placeholder="Message"
-            />
-            {/* select */}
-            <Text style={s.label}>Select:</Text>
-            <Picker
-              selectedValue={language}
-              style={s.input}
-              onValueChange={(value, index) => setLanguage(value)}>
-              <Picker.Item label="Java" value="java" />
-              <Picker.Item label="JavaScript" value="js" />
-            </Picker>
           </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 

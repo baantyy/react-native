@@ -8,7 +8,7 @@ import Loader from './app/containers/Loader';
 const App = () => {
   return (
     <Router>
-      <Stack key="root">
+      <Stack key="root" hideNavBar>
         <Scene key="loader" component={Loader} />
         <Scene key="buttons" component={Buttons} />
         <Scene key="input" component={Input} />

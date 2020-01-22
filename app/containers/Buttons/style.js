@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: '#f7f8fa',
     width: window.width,
-    flex: 1,
   },
   container: {
     padding: 50,
